@@ -280,3 +280,74 @@ drift.load(drift_id);
     events: {Play: !0, Pause: !0, "Watch to End": !0},
     percentages: {every: 25, each: [10, 90]}
 });
+
+(function () {
+    function e(a) {
+        if (isNaN(a)) throw Error("Expected delay (" + a + ") to be a number.");
+        window.MktoForms2 ? (window.dataLayer = window.dataLayer || [], window.dataLayer.push({
+            event: "mkto.form.js",
+            "mkto.form.start": (new Date).getTime()
+        }), f(window.MktoForms2)) : setTimeout(e.bind(null, 2 * a), a)
+    }
+
+    function g() {
+        var a;
+        if (a = document.querySelector(".mktoErrorMsg")) {
+            var b = a.textContent || a.innerText;
+            a = document.querySelector("input.mktoInvalid, .mktoInvalid input");
+            window.dataLayer.push({
+                event: "mkto.form.error",
+                "mkto.form.error.message": b,
+                "gtm.element": a,
+                "gtm.elementClasses": a && a.className || "",
+                "gtm.elementId": a && a.id || "",
+                "gtm.elementName": a && a.name || "",
+                "gtm.elementTarget": a && a.target || ""
+            })
+        }
+    }
+    function f(a) {
+        a.whenReady(function (b) {
+            window.dataLayer.push({
+                event: "mkto.form.ready",
+                "mkto.form.id": b.getId(),
+                "mkto.form.submittable": b.submittable(),
+                "mkto.form.allFieldsFilled": b.allFieldsFilled(),
+                "mkto.form.values": b.getValues()
+            });
+            b.onValidate(function (c) {
+                window.dataLayer.push({event: "mkto.form.validate", "mkto.form.valid": c});
+                setTimeout(g, 0)
+            });
+            b.onSubmit(function (c) {
+                var d = c.getFormElem().find('button[type\x3d"submit"]');
+                window.dataLayer.push({
+                    event: "mkto.form.submit",
+                    "mkto.form.id": c.getId(),
+                    "mkto.form.submittable": c.submittable(),
+                    "mkto.form.allFieldsFilled": c.allFieldsFilled(),
+                    "mkto.form.values": c.getValues(),
+                    "mkto.form.button": {classes: d.attr("class"), text: d.text(), type: "submit"}
+                })
+            });
+            b.onSuccess(function (c, d) {
+                window.dataLayer.push({
+                    event: "mkto.form.success",
+                    "mkto.form.values": c,
+                    "mkto.form.followUpUrl": d
+                })
+            })
+        });
+        a.whenRendered(function (b) {
+            window.dataLayer.push({
+                event: "mkto.form.rendered",
+                "mkto.form.id": b.getId(),
+                "mkto.form.submittable": b.submittable(),
+                "mkto.form.allFieldsFilled": b.allFieldsFilled(),
+                "mkto.form.values": b.getValues()
+            })
+        })
+    }
+
+    e(125)
+})();
