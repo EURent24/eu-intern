@@ -42,3 +42,20 @@ switch (window.location.hostname.slice(-2)) {
         drift_id = "2ykw9843t99d"
 }
 drift.load(drift_id);
+
+(function (a, b) {
+    var d = "pdst-capture", e = "script";
+    if (!b.getElementById(d)) {
+        a.pdst = a.pdst || function () {
+            (a.pdst.q = a.pdst.q || []).push(arguments)
+        };
+        var c = b.createElement(e);
+        c.id = d;
+        c.async = 1;
+        c.src = "https://cdn.pdst.fm/ping.min.js";
+        b = b.getElementsByTagName(e)[0];
+        b.parentNode.insertBefore(c, b)
+    }
+    a.pdst("conf", {key: "0121f55f8737489cab239c484649319a"});
+    a.pdst("view")
+})(window, document)
