@@ -1,5 +1,5 @@
 window.addEventListener("load", function (){
-    const wrapper = document.querySelector("#swiper-wrapper-7fae4c55efac823b")
+    const wrapper = document.querySelector("#swiper-wrapper")
     const swipe = 799
 
     document.querySelector("#button-next").addEventListener('click',function (){
